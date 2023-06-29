@@ -1,4 +1,3 @@
-//ブロック
 block=[
     [   
         //ブロック0
@@ -193,15 +192,14 @@ block=[
     
     //ブロック色
     biro=['#CC00CC','#FFA500','#CC0000','#00CC00','#CC0000','#CCCC00']
-    // biro=[rgb(214, 122, 127),rgb(214, 122, 127),rgb(214, 122, 127),rgb(214, 122, 127),rgb(214, 122, 127),rgb(214, 122, 127)]
     
 function tsugiwotsukuru(){
     //next block
     btsugi = Math.floor(Math.random() * 7);
 
 
-    tsugigamen=document.getElementById('tsugi');
-    ct=tsugigamen.getContext('2d');
+    tsugigamen = document.getElementById('tsugi');
+    ct = tsugigamen.getContext('2d');
     ct.clearRect(0, 0, 79, 79);
 
     //描画
@@ -215,7 +213,7 @@ function kakunin(bx, by, muki, shurui){
             if(p[n][m] === 1){
                 //空欄か調べる
                 //x
-                if((bx + m < 0) || (bx + m > 11)){
+                if((bx + m < 0) || (bx + m > 21)){
                     return false;
                 }
                 //y
@@ -283,17 +281,6 @@ function shitaidou(){
         ishurui = btsugi;
         imuki = 0;
         kaku (cg, ix, iy, imuki, ishurui);
-
-        kekka = kakunin(ix, iy, imuki, ishurui);
-        if(!kekka){
-           document.getElementById('gameover').play();
-           alert('ゲームオーバー');
-
-           jikkou = false;
-        }
-
-
-
         //さらに次のblockを設定
         tsugiwotsukuru();
     }
@@ -359,15 +346,14 @@ function ugokasu(e){
     
 function kesu(c, bx, by, muki, shurui){
     //消す処理
-    c.globalCompositeOperation = 'destination-out';
+    c.globalCompositeOperation='destination-out';
     //描く（実際は消える）
     kaku(c, bx, by, muki, shurui);
     //元の描く処理
-    c.globalCompositeOperation = 'source-over';
+    c.globalCompositeOperation='source-over';
 }
     
 function kaku(c, bx, by, muki, shurui){
-    // c.clearRect(0, 0, 239, 439);
 
     //ブロック色と線
     c.fillStyle = biro[shurui];
@@ -394,8 +380,7 @@ function kaku(c, bx, by, muki, shurui){
     //current block type
 jyoutai = [];
 
-
-function tokutenkeisan() {
+function tokutenkeisan(){
     kosuu = 0;
 
     //全ラインチェック
@@ -404,15 +389,16 @@ function tokutenkeisan() {
     
         
 
-        for (x = 1; x <= 10; x++) {
+        for (x = 1; x <= 20; x++) {
             // console.log(jyoutai[y][x])
-            if ((jyoutai[y][x] === 100)) {
+            if ((jyoutai[y][x] === 100) || (jyoutai[y][x] === 99)) {
+                console.log(jyoutai);
                 //ブロックがない
                 sorottenai = true;
-                console.log(sorottenai)
-            }
-        }
+
+            
                     if (!sorottenai) {
+                        console.log(sorrotenai);
                         //そろってる
                         
                         kosuu = kosuu + 1;
@@ -426,17 +412,15 @@ function tokutenkeisan() {
                                 jyoutai[k][x] = jyoutai[k-1][x];
                             }
                         }
-                    }
-                }
     
 
                         //ブロックを全部描き直す
                         //1.キャンバスを取得
                         gamegamen = document.getElementById('game');
-                        cg = gamegamen.getContext('2d');
+                        cg=gamegamen.getContext('2d');
 
                         //2.全部消す
-                        cg.clearRect(0, 0, 239, 439);
+                        cg.clearRect(0, 0, 359, 439);
                         //3.ブロックがあるところを描く
                         for (y = 0; y < 22; y++){
                             for (x = 0; x < 22; x++){
@@ -472,7 +456,10 @@ function tokutenkeisan() {
                         tgamen = document.getElementById('tokuten');
                         tgamen.innerHTML = tokuten;
                         }
-                    
+                    }
+                }
+           }
+    }
     function jikandeugokasu(){
         if(jikkou){
             //実行中
@@ -503,8 +490,8 @@ function gamekaishi(){
         
             jyoutai = new Array(22);
             for(i = 0; i < 22; i++){
-                jyoutai[i] = new Array(12);
-                for(j = 0; j < 12; j++){
+                jyoutai[i] = new Array(22);
+                for(j = 0; j < 22; j++){
                     jyoutai[i][j] = 100;
                 }
             }
@@ -514,10 +501,10 @@ function gamekaishi(){
             }
             //setting right block
             for (i = 0; i < 22; i++){
-                jyoutai[i][11] = 99;
+                jyoutai[i][21] = 99;
             }
             //setting bottom block
-            for(i = 0; i < 12; i++){
+            for(i = 0; i < 22; i++){
                 jyoutai[21][i] = 99;
             }
             //ランダム
@@ -552,30 +539,32 @@ function hajime() {
     
             
 
-            for(i = 0; i < 22; i++) {
-                cd.fillRect(x, y, 20, 20);
-                cd.strokeRect(x, y, 20, 20);
-                y = y + 20;
-            }
-            //右壁
-            x = 220;
-            y = 0;
+        for(i = 0; i < 22; i++) {
+            cd.fillRect(x, y, 20, 20);
+            cd.strokeRect(x, y, 20, 20);
+            y = y + 20;
+        }
+        //右壁
+        x = 340;
+        y = 0;
 
-            for (i = 0; i < 22; i++){
-                cd.fillRect(x, y, 20, 20);
-                cd.strokeRect(x, y, 20, 20);
-                y = y + 20;
-            }
-            //下側
-            x = 0;
-            y = 420;
+        for (i = 0; i < 22; i++){
+            cd.fillRect(x, y, 20, 20);
+            cd.strokeRect(x, y, 20, 20);
+            y = y + 20;
+        }
+        //下側
+        x = 0;
+        y = 420;
 
-            for (i = 0; i < 22; i++){
-                cd.fillRect(x, y, 20, 20);
-                cd.strokeRect(x, y, 20, 20);
-                x = x + 20;
-
-            }
+        for (i = 0; i < 22; i++){
+            cd.fillRect(x, y, 20, 20);
+            cd.strokeRect(x, y, 20, 20);
+            x = x + 20;
+            console.log(jyoutai)
 
         }
+
+    }
+    
 
